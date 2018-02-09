@@ -15,13 +15,12 @@ main:
 	syscall            # Abre el archivo y retorna la descripción en el  registro $v0
 	move $s6, $v0      # guardamos la descripción del archivo en $s6
 
-	move $a0, $v0
-	
-	li $v0, 1
+	move $a0, $v0	# guardamos la descripción del archivo al registro $a0	
+	li $v0, 1	# ahora imprimimos el número en $v0 para saber si se abrio correctamente el archivo
 	syscall
 	
-	addi $v0, $zero, 4  # print_string syscall
-    	la $a0, space       # load address of the string
+	addi $v0, $zero, 4  # Imprime una cadena string en el syscall
+    	la $a0, space       # load 
     	syscall
 
 	#read from file
@@ -32,7 +31,6 @@ main:
 	syscall            # read from file
 	
 	move $a0, $a1
-	
 	li $v0, 4
 	syscall
 	
