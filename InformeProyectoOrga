@@ -53,6 +53,16 @@ Diego Alejandro Rodríguez (14-)
 		Al regresar en main, le pedimos al usuario ingresa el contenido del archivo con la instrucción 8 en $v0 para el syscall.
 		Luego nos direccionamos a la función dir_make. Donde abrimos el archivo, guardamos el file descriptor y luego leemos el contenido del archivo asignandole 15 a $v0 en el syscall. Finalmente volvemos a main y finalizamos el programa.
 
+		Implementación del método dir_cp:
+
+		Copia el contenido del archivo nombre1 al archivo nombre2
+		.data 
+			Tenemos txt1 y txt2 como archivos de textos
+		.main
+			Abrimos el archivo en txt1, asignando 0 en $a1 (flag 0 para usarlo de lectura) y guardamos en $s7 el file descriptor
+			Luego con la instrucción 14 en $v0 leemos el archivo (asignando $s7 en $a0). Guardamos el número de caracteres leídos en $s0. Cerramos el archivo.
+			Abrimos el archivo txt2 con 1 de flag (para poder sobreescribir en él). Luego asignamos 15 en $v0 para que en syscall podamos escribir en el archivo de txt1 en txt2
+
 
 
 
