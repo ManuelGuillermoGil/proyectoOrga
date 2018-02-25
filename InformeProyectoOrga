@@ -1,0 +1,58 @@
+25 de Febrero del 2018
+Caracas. Universidad Simón Bolívar
+Organizador del Computador. Trimestre Enero - Marzo
+Manuel Guillermo Gil (14-10397)
+Diego Alejandro Rodríguez (14-)
+
+								INFORME DEL PRIMER PROYECTO	
+
+	Definición del Problema
+	Los recursos del computador son administrados por un grupo de programas con los cuales los usuarios
+	se comunican para indicarle qué operación se requiere realizar. Los manejadores están definidos en
+	función de las operaciones que le son permitidas realizar al usuario. En este proyecto se requiere que
+	Ud. implemente un Manejador de archivos y un intérprete de comandos.
+
+	Actividad 1: TAD_Directorio
+
+	Inicialización:
+	Al inicializar, su programa deberá abrir un archivo de nombre init.txt. Este archivo en su primera línea
+	contendrá el número inicial de archivos con el que su proyecto debe inicializarse, en la siguiente línea
+	vendrá el nombre del primer archivo, luego el número de líneas que el archivo contendrá y luego, una a
+	una, las líneas de ese archivo. Luego vendrá el nombre del siguiente archivo, el número de líneas y sus
+	datos, hasta alcanzar el número de archivos indicado inicialmente.
+
+	Tenemos que implementar los métodos dir_init, dir_make, dir_rm, dir_cp, dir_ren, dir_Is, dir_cat, dir_cif, dir_dcif, perror en MIPS
+
+	Implementación del método dir_init
+
+	Inicializa la estrututas que componen la representación del TAD.
+	.data
+		Guardamos espacio de memoria de 1024 en la etiqueta archivo. 
+	.text
+		Para poder pedir que le usuario introduzca el archivo, cargamos inmediatamente 
+		la instrucción 8 en el registro $v0 cuyos parametros en los registros $a0 y $a1 son archivo y 1024 respectivamente, para luego llamar a syscall
+		Luego guardamos el contenido del registro $v0 (resultado tras la llamada del syscall) en el registro $a0. Para poder llamar a la función dir_init.
+		Función dir_init:
+			Abrimos el archivo con la instrucción de 13 en $v0 en syscall. Luego guardamos el 
+			contenido el file descriptor en el registro $s7.
+		Al finalizar la función dir_init terminamos el programa
+
+	Implementación del método dir_make:
+
+	Crea un archivo con el contenido especificado.
+	.data
+		Guardamos espacio en memoria de 20 para archivo el cual será el nombre del archivo que queremos crear
+		Guardamos espacio en memoria de 1024 para contenido el cual va a ser el contenido del archivo que queremos crear
+	.text
+		Pedimos el nombre del archivo al usuario, cargando inmediatamente el valor 8 en el registro $v0. Luego load address de archivo en $a0, y 20 en $a1 (número máximo de caracteres)
+
+		Inicializamos el registro $t1 en 0 (el cual nos servirá como un i = 0. Un indicador que irá creciendo o decreciendo). Luego guardamos ese valor en $t0.
+		En la siguiente instrucción nos redirrecionará a la etiqueta while. La primera instrucción de esta etiqueta es una bifurcación de beq, donde si 10 es igual al registro $t0 nos direccionará a la etiqueta "exit". 
+		Básicamente en el while vamos a hacer un load byte de archivo($t1) en $t0, luego aumentamos +1 a $t1.
+		En la etiqueta de "exit", restamos mediante la operación subi -1 a $t1, inicializamos $t2 en cero. Para poder guardar en este registro mediante store byte, archivo($t1). Luego la siguiente instrucción es jr $ra para regresar a nuestro programa main.
+		Al regresar en main, le pedimos al usuario ingresa el contenido del archivo con la instrucción 8 en $v0 para el syscall.
+		Luego nos direccionamos a la función dir_make. Donde abrimos el archivo, guardamos el file descriptor y luego leemos el contenido del archivo asignandole 15 a $v0 en el syscall. Finalmente volvemos a main y finalizamos el programa.
+
+
+
+

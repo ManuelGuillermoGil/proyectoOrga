@@ -3,7 +3,7 @@
 	archivo: .space 20
 	mensaje: .asciiz "Introduce el archivo que deseas crear:" "\n"
 	mensaje2: .asciiz "Introduce que quieres que haya en el archivo:" "\n"
-	archivo2: .space 1024
+	contenido: .space 1024
 	
 .text
 
@@ -27,7 +27,7 @@ main:
 	la $a0, mensaje2
 	syscall
 	
-	la $a0, archivo2
+	la $a0, contenido
 	li $a1, 1024
 	li $v0, 8  #el usuario introduce el archivo
 	syscall
@@ -52,7 +52,7 @@ dir_make:
 	#esrcibir desde el archivo
 	li   $v0, 15       # Leer un archivo
 	move $a0, $s7      #mueve el file descriptor       
-	la   $a1, archivito   # address of buffer to which to read
+	la   $a1, contenido   # address of buffer to which to read
 	li   $a2, 1024    # hardcoded buffer length
 	syscall  
 	
